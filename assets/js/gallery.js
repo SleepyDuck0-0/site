@@ -14,7 +14,7 @@ document.addEventListener("mousemove", function(e) {
 // Apply zoom in/out on hover
 document.addEventListener("mouseover", function(e) {
     if (e.target.matches(".modal-image-wrapper img")) {
-        e.target.style.transform = "scale(1.4)"; // adjust max zoom here
+        e.target.style.transform = "scale(1.7)"; // adjust max zoom here
     }
 });
 document.addEventListener("mouseout", function(e) {
