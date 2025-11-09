@@ -1,0 +1,242 @@
+---
+layout: default
+title: Paintings
+---
+
+<body class="no-sidebar is-preload">
+<div id="page-wrapper">
+
+	<!-- Main -->
+	<section id="main">
+		<div class="container">
+			<!-- Dynamic Gallery -->
+			<div class="gallery" id="gallery"></div>
+
+			<!-- Pagination -->
+			<div class="pagination" id="pagination"></div>
+
+			<!-- Dynamic Modals -->
+			<div id="modals"></div>
+
+			<!-- Lightbox overlay -->
+			<div id="lightbox" class="lightbox">
+				<img id="lightbox-img" src="" alt="Full Size Image">
+				<button class="close-btn" onclick="closeLightbox()">×</button>
+			</div>
+		</div>
+	</section>
+
+</div>
+
+<!-- Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.dropotron.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+
+<script>
+	// ======= EDITABLE AREA =======
+	const images = [
+		{
+			src: "images/Paintings/2025-2.jpg",
+			title: "Girl on a Boat",
+			description: "The Statue of Liberty captured on a clear summer afternoon."
+		},
+		{
+			src: "images/Paintings/2025-1.jpg",
+			title: "Vetheuil, Paysage",
+			description: "A close-up of Lady Liberty’s torch under bright sunlight."
+		},
+		{
+			src: "images/Paintings/2023-1.jpg",
+			title: "Walking in the Rain",
+			description: "The view from Liberty Island, looking back toward Manhattan."
+		},
+		{
+			src: "images/Paintings/2022-2.jpg",
+			title: "Autumn Forest",
+			description: "Serene waters reflecting the twilight sky."
+		},
+		{
+			src: "images/Paintings/2022-1.jpg",
+			title: "River Running Through Forest",
+			description: "Soft morning light cascading across the skyline."
+		},
+		{
+			src: "images/Paintings/2021-2.jpg",
+			title: "Morning Forest Path",
+			description: "A quiet street corner filled with color and charm."
+		},
+		{
+			src: "images/Paintings/2021-1.jpg",
+			title: "Flowery Fields",
+			description: "Golden hour tones painting the cityscape."
+		},
+	];
+	const imagesPerPage = 6;
+	// ======= END EDITABLE AREA =======
+
+	const gallery = document.getElementById('gallery');
+	const pagination = document.getElementById('pagination');
+	const modalsContainer = document.getElementById('modals');
+	let currentPage = 1;
+	const totalPages = Math.ceil(images.length / imagesPerPage);
+
+	function renderGallery(page) {
+		gallery.innerHTML = "";
+		modalsContainer.innerHTML = "";
+
+		const start = (page - 1) * imagesPerPage;
+		const end = Math.min(start + imagesPerPage, images.length);
+		const pageImages = images.slice(start, end);
+
+		pageImages.forEach((img, idx) => {
+			const modalId = `modal${start + idx + 1}`;
+
+			// Gallery item
+			const a = document.createElement('a');
+			a.href = "javascript:void(0)"; // prevent page navigation
+			a.className = 'gallery-item';
+			a.innerHTML = `<img src="${img.src}" alt="${img.title}"><div class="title">${img.title}</div>`;
+			a.addEventListener('click', () => openModal(modalId));
+			gallery.appendChild(a);
+
+			// Modal
+			const modal = document.createElement('div');
+			modal.id = modalId;
+			modal.className = 'modal';
+			modal.style.display = 'none'; // hide initially
+			modal.innerHTML = `
+				<div class="modal-content">
+					<a href="#" class="modal-close">&times;</a>
+					<img src="${img.src}" alt="${img.title}">
+					<h2>${img.title}</h2>
+					<p class="modal-description">${img.description || ""}</p>
+				</div>
+			`;
+			modalsContainer.appendChild(modal);
+
+			// Close when clicking X
+			modal.querySelector('.modal-close').addEventListener('click', e => {
+				e.preventDefault();
+				modal.style.display = 'none';
+			});
+
+			// Close when clicking outside modal-content
+			modal.addEventListener('click', e => {
+				if (!e.target.closest('.modal-content')) {
+					modal.style.display = 'none';
+				}
+			});
+		});
+
+		renderPagination();
+	}
+
+	function openModal(modalId) {
+		const modal = document.getElementById(modalId);
+		if (modal) modal.style.display = 'flex';
+	}
+
+	function renderPagination() {
+		pagination.innerHTML = "";
+
+		if (currentPage > 1) {
+			const prevBtn = document.createElement('button');
+			prevBtn.textContent = "« Prev";
+			prevBtn.addEventListener('click', () => {
+				currentPage--;
+				renderGallery(currentPage);
+			});
+			pagination.appendChild(prevBtn);
+		}
+
+		for (let i = 1; i <= totalPages; i++) {
+			const btn = document.createElement('button');
+			btn.textContent = i;
+			if (i === currentPage) btn.classList.add('active');
+			btn.addEventListener('click', () => {
+				currentPage = i;
+				renderGallery(currentPage);
+			});
+			pagination.appendChild(btn);
+		}
+
+		if (currentPage < totalPages) {
+			const nextBtn = document.createElement('button');
+			nextBtn.textContent = "Next »";
+			nextBtn.addEventListener('click', () => {
+				currentPage++;
+				renderGallery(currentPage);
+			});
+			pagination.appendChild(nextBtn);
+		}
+	}
+
+	renderGallery(currentPage);
+</script>
+
+<style>
+	.modal-description {
+		margin-top: 10px;
+		font-size: 1em;
+		color: #555;
+		text-align: center;
+		line-height: 1.4;
+	}
+
+	.modal-content {
+		position: relative;
+		overflow-y: auto;
+		max-height: 90vh;
+		padding: 20px;
+		padding-top: 40px;
+		border-radius: 10px;
+		background: #fff;
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+	}
+
+	.modal-close {
+		float: right;
+		position: sticky;
+		top: 0px;
+		right: 0px;
+		z-index: 1000;
+		width: 35px;
+		height: 35px;
+		line-height: 35px;
+		text-align: center;
+		font-size: 24px;
+		font-weight: bold;
+		color: #ed786a;
+		background: #fff;
+		border-radius: 10px;
+		cursor: pointer;
+		transition: background 0.2s, color 0.2s;
+	}
+
+	.modal-close:hover {
+		background: #ed786a;
+		color: #fff;
+	}
+
+	.modal {
+		display: none;
+		position: fixed;
+		z-index: 999;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		overflow: auto;
+		background: rgba(0, 0, 0, 0.5);
+		justify-content: center;
+		align-items: center;
+	}
+	
+</style>
+
+</body>
+</html>
