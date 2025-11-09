@@ -8,18 +8,20 @@ layout: default
 			<div class="row">
 
 				<!-- Sidebar -->
-					<aside id="sidebar" class="col-3 col-12-medium">
+					<div id="sidebar" class="col-3 col-12-medium">
 
 						{%for post in site.posts %}
 						<article class="box excerpt">
 							<header>
-								<h4><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h4>
+								<h4><a href="{{ post.url | relative_url }}"> 
+									{{ post.title }}
+								</a></h4>
 								<time datetime = "{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: '%B %Y' }} </time>
-								<!-- <p><a href="{{ post.title }}"></a></p> -->
+								<p><a href="{{ post.title }}"></a></p>
 							</header>
 						</article>
 						{% endfor %}
-					</aside>
+					</div>
 
 				<!-- Content -->
 					<div id="content" class="col-9 col-12-medium imp-medium">
@@ -35,7 +37,7 @@ layout: default
 							
 								</header>
                                 {% if page.image %}
-								<span class="image featured"><img src="{{ page.image | relative_url }}" alt="{{ page.title }}" /></span>
+								<span class="image featured"><img src="{{ page.image | relative_url }}" alt="" /></span>
                                 {% endif %}
 
                                 {{ content }}
