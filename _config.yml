@@ -31,7 +31,7 @@ github_username:  sleepyduck0-0
 
 # Build settings
 
-permalink: /blog/:title
+permalink: /:title
 
 # theme: minima
 plugins:
