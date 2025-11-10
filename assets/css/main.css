@@ -2926,7 +2926,7 @@ input, select, textarea {
 		}
 
 		.latest-post-image {
-			flex: 1 1 300px;       /* image takes minimum 300px, grows as needed */
+			flex: 0 0 auto;       /* size naturally */
 			max-width: 50%;        /* image max width 50% of container */
 		}
 
