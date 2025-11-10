@@ -2,6 +2,7 @@
 layout: post
 title: back from the vacation
 date: 2024-09-02 12:00
+image: images/Photos/2024-08-25, New York - Statue of Liberty (2).JPG
 ---
 
 This vacation brought me to three big cities: New York, Philadelphia, and Washington, D.C. During the trip, I slowly got familiar with living in an urban environment. Then arose the question of whether I would consider living in a big city when I grow up. This question has stuck in the back of my mind, and I thought of some points while I explored.

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Spending Money
+title: Spending Money Essay
 date: 2023-01-01 12:00
 ---
 

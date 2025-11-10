@@ -3,82 +3,52 @@ layout: default
 title: Crafts
 ---
 
-<body class="no-sidebar is-preload">
+<!-- <body class="no-sidebar is-preload">-->
 <div id="page-wrapper">
 
-	<!-- Main -->
-	<section id="main">
-		<div class="container">
-			<!-- Dynamic Gallery -->
-			<div class="gallery" id="gallery"></div>
+  <!-- Main Gallery Section -->
+  <section id="main">
+    <div class="container">
 
-			<!-- Pagination -->
-			<div class="pagination" id="pagination"></div>
+      <!-- Dynamic Gallery -->
+      <div class="gallery" id="gallery"></div>
 
-			<!-- Dynamic Modals -->
-			<div id="modals"></div>
+      <!-- Pagination -->
+      <div class="pagination" id="pagination"></div>
 
-			<!-- Lightbox overlay -->
-			<div id="lightbox" class="lightbox">
-				<img id="lightbox-img" src="" alt="Full Size Image">
-				<button class="close-btn" onclick="closeLightbox()">×</button>
-			</div>
-		</div>
-	</section>
+      <!-- Dynamic Modals -->
+      <div id="modals"></div>
+
+      <!-- Lightbox Overlay -->
+      <div id="lightbox" class="lightbox">
+        <img id="lightbox-img" src="" alt="Full Size Image">
+        <button class="close-btn" onclick="closeLightbox()">×</button>
+      </div>
+
+    </div>
+  </section>
 
 </div>
 
 
+<!-- Gallery Styles -->
+<link rel="stylesheet" href="{{ '/assets/css/gallery.css' | relative_url }}">
+
+
 <script>
 	// ======= EDITABLE AREA =======
-	const images = [
-		{
-			src: "images/Photos/2024-08-25, New York - Statue of Liberty (2).JPG",
-			title: "Photo 1",
-			description: "The Statue of Liberty captured on a clear summer afternoon."
-		},
-		{
-			src: "images/Photos/2024-08-25, New York - Statue of Liberty (2).JPG",
-			title: "Photo 2",
-			description: "A close-up of Lady Liberty’s torch under bright sunlight."
-		},
-		{
-			src: "images/Photos/2024-08-25, New York - Statue of Liberty (2).JPG",
-			title: "Photo 3",
-			description: "The view from Liberty Island, looking back toward Manhattan."
-		},
-		{
-			src: "{{ site.url }}{{ site.baseurl }}/images/pic04.jpg",
-			title: "Photo 4",
-			description: "Serene waters reflecting the twilight sky."
-		},
-		{
-			src: "{{ site.url }}{{ site.baseurl }}/images/pic05.jpg",
-			title: "Photo 5",
-			description: "Soft morning light cascading across the skyline."
-		},
-		{
-			src: "{{ site.url }}{{ site.baseurl }}/images/pic06.jpg",
-			title: "Photo 6",
-			description: "A quiet street corner filled with color and charm."
-		},
-		{
-			src: "{{ site.url }}{{ site.baseurl }}/images/pic07.jpg",
-			title: "Photo 7",
-			description: "Golden hour tones painting the cityscape."
-		},
-		{
-			src: "{{ site.url }}{{ site.baseurl }}/images/pic01.jpg",
-			title: "Photo 8",
-			description: "The first light of dawn, soft and warm."
-		},
-		{
-			src: "{{ site.url }}{{ site.baseurl }}/images/pic02.jpg",
-			title: "Photo 9",
-			description: "A tranquil reflection on the edge of the water."
-		}
-	];
-	const imagesPerPage = 5;
+  const images = [
+	{% for item in site.data.craft_gallery %}
+    {
+      src: "{{ '/images/Crafts/' | append: item.filename | relative_url }}",
+      title: "{{ item.title | escape }}",
+      description: "{{ item.description | escape }}"
+    }{% if forloop.last == false %},{% endif %}
+    {% endfor %}
+  ];
+
+
+	const imagesPerPage = 9;
 	// ======= END EDITABLE AREA =======
 
 	const gallery = document.getElementById('gallery');
@@ -113,9 +83,11 @@ title: Crafts
 			modal.style.display = 'none'; // hide initially
 			modal.innerHTML = `
 				<div class="modal-content">
-					<a href="#" class="modal-close">&times;</a>
-					<img src="${img.src}" alt="${img.title}">
-					<h2>${img.title}</h2>
+  					<a href="#" class="modal-close">&times;</a>
+  					<div class="modal-image-wrapper">
+   					 <img src="${img.src}" alt="${img.title}">
+ 					</div>
+ 					<h2>${img.title}</h2>
 					<p class="modal-description">${img.description || ""}</p>
 				</div>
 			`;
@@ -179,66 +151,11 @@ title: Crafts
 	}
 
 	renderGallery(currentPage);
+
+
 </script>
 
-<style>
-	.modal-description {
-		margin-top: 10px;
-		font-size: 1em;
-		color: #555;
-		text-align: center;
-		line-height: 1.4;
-	}
 
-	.modal-content {
-		position: relative;
-		overflow-y: auto;
-		max-height: 90vh;
-		padding: 20px;
-		padding-top: 40px;
-		border-radius: 10px;
-		background: #fff;
-		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-	}
 
-	.modal-close {
-		float: right;
-		position: sticky;
-		top: 0px;
-		right: 0px;
-		z-index: 1000;
-		width: 35px;
-		height: 35px;
-		line-height: 35px;
-		text-align: center;
-		font-size: 24px;
-		font-weight: bold;
-		color: #ed786a;
-		background: #fff;
-		border-radius: 10px;
-		cursor: pointer;
-		transition: background 0.2s, color 0.2s;
-	}
-
-	.modal-close:hover {
-		background: #ed786a;
-		color: #fff;
-	}
-
-	.modal {
-		display: none;
-		position: fixed;
-		z-index: 999;
-		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100%;
-		overflow: auto;
-		background: rgba(0, 0, 0, 0.5);
-		justify-content: center;
-		align-items: center;
-	}
-</style>
-
-</body>
-</html>
+<!-- Scripts -->
+<!-- <script src="assets/js/gallery.js"></script> -->

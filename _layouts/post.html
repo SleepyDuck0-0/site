@@ -35,7 +35,7 @@ layout: default
 							
 								</header>
                                 {% if page.image %}
-								<span class="image featured"><img src="{{ page.image | relative_url }}" alt="{{ page.title }}" /></span>
+								<span class="image featured" style=" max-height: 50%; max-width: 100%; height: auto; width: auto;"><img src="{{ page.image | relative_url }}" alt="{{ page.title }}"></span>
                                 {% endif %}
 
                                 {{ content }}
